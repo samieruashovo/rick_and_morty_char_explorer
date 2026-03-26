@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/app_dimensions.dart';
-import '../../../../core/responsive_extensions.dart';
 import '../../domain/character_models.dart';
 import '../controllers/character_providers.dart';
 

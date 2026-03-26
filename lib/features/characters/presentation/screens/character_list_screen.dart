@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/app_colors.dart';
 import '../../../../core/app_dimensions.dart';
-import '../../../../core/responsive_extensions.dart';
 import '../controllers/character_providers.dart';
 import '../widgets/character_card.dart';
 import 'favorites_screen.dart';
