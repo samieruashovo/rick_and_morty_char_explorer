@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +20,7 @@ class CharacterListScreen extends ConsumerStatefulWidget {
 
 class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
   final _scrollController = ScrollController();
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
   String _query = '';
   String _statusFilter = 'All';
 
@@ -24,10 +28,13 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen(_handleConnectivityChange);
   }
 
   @override
   void dispose() {
+    _connectivitySubscription?.cancel();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
@@ -40,6 +47,31 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
             AppDimensions.paginationTrigger.h) {
       ref.read(characterListControllerProvider.notifier).loadNextPage();
     }
+  }
+
+  Future<void> _handleConnectivityChange(
+    List<ConnectivityResult> results,
+  ) async {
+    final hasConnection = results.any((result) {
+      return result != ConnectivityResult.none;
+    });
+
+    if (!hasConnection || !mounted) {
+      return;
+    }
+
+    final listState = ref.read(characterListControllerProvider);
+    final shouldRefresh = listState.maybeWhen(
+      data: (state) => state.usedCache,
+      error: (_, __) => true,
+      orElse: () => false,
+    );
+
+    if (!shouldRefresh) {
+      return;
+    }
+
+    await ref.read(characterListControllerProvider.notifier).refresh();
   }
 
   @override
