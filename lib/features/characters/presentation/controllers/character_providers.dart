@@ -26,7 +26,7 @@ final characterLocalDataSourceProvider = Provider(
   ),
 );
 
-final characterRepositoryProvider = Provider(
+final characterRepositoryProvider = Provider<CharacterRepositoryBase>(
   (ref) => CharacterRepository(
     api: ref.watch(characterApiServiceProvider),
     local: ref.watch(characterLocalDataSourceProvider),

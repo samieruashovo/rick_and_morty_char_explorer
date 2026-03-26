@@ -12,7 +12,6 @@ class CharacterLocalDataSource {
         _characterBox = characterBox,
         _favoritesBox = favoritesBox,
         _overrideBox = overrideBox;
-
   final Box<dynamic> _pageBox;
   final Box<dynamic> _characterBox;
   final Box<dynamic> _favoritesBox;

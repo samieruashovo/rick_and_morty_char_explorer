@@ -2,7 +2,18 @@ import '../domain/character_models.dart';
 import 'character_api_service.dart';
 import 'character_local_data_source.dart';
 
-class CharacterRepository {
+abstract class CharacterRepositoryBase {
+  Future<CharacterPage> getCharacterPage(int page);
+  List<Character> getCachedCharactersForPages(Iterable<int> pages);
+  Future<Character?> getCharacterById(int id);
+  Set<int> getFavoriteIds();
+  Future<void> setFavorite(int id, bool isFavorite);
+  Map<int, CharacterOverride> getOverrides();
+  Future<void> saveOverride(int id, CharacterOverride override);
+  Future<void> deleteOverride(int id);
+}
+
+class CharacterRepository implements CharacterRepositoryBase {
   CharacterRepository({
     required CharacterApiService api,
     required CharacterLocalDataSource local,
@@ -12,6 +23,7 @@ class CharacterRepository {
   final CharacterApiService _api;
   final CharacterLocalDataSource _local;
 
+  @override
   Future<CharacterPage> getCharacterPage(int page) async {
     try {
       final remote = await _api.fetchCharacters(page);
@@ -26,10 +38,12 @@ class CharacterRepository {
     }
   }
 
+  @override
   List<Character> getCachedCharactersForPages(Iterable<int> pages) {
     return _local.getCachedCharactersForPages(pages);
   }
 
+  @override
   Future<Character?> getCharacterById(int id) async {
     final cached = _local.getCharacter(id);
     if (cached != null) {
@@ -45,18 +59,23 @@ class CharacterRepository {
     }
   }
 
+  @override
   Set<int> getFavoriteIds() => _local.getFavoriteIds();
 
+  @override
   Future<void> setFavorite(int id, bool isFavorite) {
     return _local.setFavorite(id, isFavorite);
   }
 
+  @override
   Map<int, CharacterOverride> getOverrides() => _local.getOverrides();
 
+  @override
   Future<void> saveOverride(int id, CharacterOverride override) {
     return _local.saveOverride(id, override);
   }
 
+  @override
   Future<void> deleteOverride(int id) {
     return _local.deleteOverride(id);
   }

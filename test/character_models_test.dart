@@ -27,4 +27,10 @@ void main() {
     expect(merged.status, 'Alive');
     expect(merged.image, 'image-url');
   });
+
+  test('empty override is treated as resettable state', () {
+    const override = CharacterOverride();
+
+    expect(override.isEmpty, isTrue);
+  });
 }
