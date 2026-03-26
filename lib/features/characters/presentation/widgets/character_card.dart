@@ -53,7 +53,7 @@ class CharacterCard extends ConsumerWidget {
                     width: 84,
                     height: 84,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (context, error, stackTrace) => Container(
                       width: 84,
                       height: 84,
                       color: const Color(0xFFE5E7EB),
@@ -120,7 +120,7 @@ class _MetaChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(

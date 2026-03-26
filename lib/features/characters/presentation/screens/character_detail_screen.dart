@@ -52,7 +52,7 @@ class CharacterDetailScreen extends ConsumerWidget {
                     character.image,
                     height: 320,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (context, error, stackTrace) => Container(
                       height: 320,
                       color: const Color(0xFFE5E7EB),
                       alignment: Alignment.center,

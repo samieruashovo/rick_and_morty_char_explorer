@@ -25,8 +25,9 @@ class FavoritesScreen extends ConsumerWidget {
 
           return ListView.separated(
             padding: const EdgeInsets.all(16),
-            itemBuilder: (_, index) => CharacterCard(character: characters[index]),
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            itemBuilder: (context, index) =>
+                CharacterCard(character: characters[index]),
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: characters.length,
           );
         },
