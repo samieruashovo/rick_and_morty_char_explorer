@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../controllers/character_providers.dart';
 import 'edit_character_screen.dart';
+import '../widgets/cached_character_image.dart';
 
 class CharacterDetailScreen extends ConsumerWidget {
   const CharacterDetailScreen({super.key, required this.characterId});
@@ -46,19 +47,12 @@ class CharacterDetailScreen extends ConsumerWidget {
             children: [
               Hero(
                 tag: 'character-${character.id}',
-                child: ClipRRect(
+                child: CachedCharacterImage(
+                  imageUrl: character.image,
+                  width: double.infinity,
+                  height: 320,
                   borderRadius: BorderRadius.circular(28),
-                  child: Image.network(
-                    character.image,
-                    height: 320,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 320,
-                      color: const Color(0xFFE5E7EB),
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.broken_image_outlined, size: 42),
-                    ),
-                  ),
+                  iconSize: 42,
                 ),
               ),
               const SizedBox(height: 20),

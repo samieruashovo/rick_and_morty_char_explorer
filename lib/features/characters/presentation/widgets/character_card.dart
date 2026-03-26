@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/character_models.dart';
 import '../controllers/character_providers.dart';
 import '../screens/character_detail_screen.dart';
+import 'cached_character_image.dart';
 
 class CharacterCard extends ConsumerWidget {
   const CharacterCard({super.key, required this.character});
@@ -46,21 +47,11 @@ class CharacterCard extends ConsumerWidget {
             children: [
               Hero(
                 tag: 'character-${character.id}',
-                child: ClipRRect(
+                child: CachedCharacterImage(
+                  imageUrl: merged.image,
+                  width: 84,
+                  height: 84,
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.network(
-                    merged.image,
-                    width: 84,
-                    height: 84,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 84,
-                      height: 84,
-                      color: const Color(0xFFE5E7EB),
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.broken_image_outlined),
-                    ),
-                  ),
                 ),
               ),
               const SizedBox(width: 14),
