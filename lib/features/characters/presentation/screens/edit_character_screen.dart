@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/app_dimensions.dart';
+import '../../../../core/responsive_extensions.dart';
 import '../../domain/character_models.dart';
 import '../controllers/character_providers.dart';
 
@@ -89,7 +91,7 @@ class _EditCharacterScreenState extends ConsumerState<EditCharacterScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(AppDimensions.spaceXl.w),
           children: [
             _Field(controller: _nameController, label: 'Name'),
             _Field(controller: _statusController, label: 'Status'),
@@ -98,7 +100,7 @@ class _EditCharacterScreenState extends ConsumerState<EditCharacterScreen> {
             _Field(controller: _genderController, label: 'Gender'),
             _Field(controller: _originController, label: 'Origin name'),
             _Field(controller: _locationController, label: 'Location name'),
-            const SizedBox(height: 20),
+            SizedBox(height: AppDimensions.spaceXl.h),
             FilledButton(
               onPressed: _save,
               child: const Text('Save local changes'),
@@ -119,7 +121,7 @@ class _Field extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: AppDimensions.spaceSm.h),
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(labelText: label),

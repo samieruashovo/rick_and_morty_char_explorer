@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/app_colors.dart';
+import '../../../../core/app_dimensions.dart';
 import '../../domain/character_models.dart';
 import '../controllers/character_providers.dart';
 import '../screens/character_detail_screen.dart';
@@ -14,11 +17,11 @@ class CharacterCard extends ConsumerWidget {
   Color _statusColor(String status) {
     switch (status.toLowerCase()) {
       case 'alive':
-        return const Color(0xFF15803D);
+        return AppColors.alive;
       case 'dead':
-        return const Color(0xFFB91C1C);
+        return AppColors.dead;
       default:
-        return const Color(0xFF6B7280);
+        return AppColors.unknown;
     }
   }
 
@@ -33,7 +36,7 @@ class CharacterCard extends ConsumerWidget {
 
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusMd.r),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
@@ -42,19 +45,19 @@ class CharacterCard extends ConsumerWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(14),
+          padding: EdgeInsets.all(AppDimensions.spaceMd.w),
           child: Row(
             children: [
               Hero(
                 tag: 'character-${character.id}',
                 child: CachedCharacterImage(
                   imageUrl: merged.image,
-                  width: 84,
-                  height: 84,
-                  borderRadius: BorderRadius.circular(18),
+                  width: AppDimensions.cardImage.w,
+                  height: AppDimensions.cardImage.w,
+                  borderRadius: BorderRadius.circular(AppDimensions.radiusSm.r),
                 ),
               ),
-              const SizedBox(width: 14),
+              SizedBox(width: AppDimensions.spaceMd.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,14 +68,14 @@ class CharacterCard extends ConsumerWidget {
                             fontWeight: FontWeight.w700,
                           ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: AppDimensions.spaceXs.h),
                     Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
+                      spacing: AppDimensions.spaceXs.w,
+                      runSpacing: AppDimensions.spaceXs.h,
                       children: [
                         _MetaChip(
                           label: merged.species,
-                          color: const Color(0xFF155E75),
+                          color: AppColors.species,
                         ),
                         _MetaChip(
                           label: merged.status,
@@ -89,7 +92,7 @@ class CharacterCard extends ConsumerWidget {
                     .toggle(character.id),
                 icon: Icon(
                   isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
-                  color: isFavorite ? const Color(0xFFF59E0B) : null,
+                  color: isFavorite ? AppColors.favorite : null,
                 ),
               ),
             ],
@@ -109,14 +112,21 @@ class _MetaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppDimensions.chipHorizontal.w,
+        vertical: AppDimensions.chipVertical.h,
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusPill.r),
       ),
       child: Text(
         label.isEmpty ? 'Unknown' : label,
-        style: TextStyle(color: color, fontWeight: FontWeight.w600),
+        style: TextStyle(
+          color: color,
+          fontWeight: FontWeight.w600,
+          fontSize: 12.sp,
+        ),
       ),
     );
   }

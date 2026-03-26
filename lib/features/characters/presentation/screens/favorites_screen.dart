@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/app_dimensions.dart';
 import '../controllers/character_providers.dart';
 import '../widgets/character_card.dart';
 
@@ -24,10 +26,11 @@ class FavoritesScreen extends ConsumerWidget {
           }
 
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppDimensions.spaceLg.w),
             itemBuilder: (context, index) =>
                 CharacterCard(character: characters[index]),
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            separatorBuilder: (context, index) =>
+                SizedBox(height: AppDimensions.spaceSm.h),
             itemCount: characters.length,
           );
         },

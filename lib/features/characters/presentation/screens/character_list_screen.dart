@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/app_colors.dart';
+import '../../../../core/app_dimensions.dart';
+import '../../../../core/responsive_extensions.dart';
 import '../controllers/character_providers.dart';
 import '../widgets/character_card.dart';
 import 'favorites_screen.dart';
@@ -33,7 +36,8 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 300) {
+        _scrollController.position.maxScrollExtent -
+            AppDimensions.paginationTrigger.h) {
       ref.read(characterListControllerProvider.notifier).loadNextPage();
     }
   }
@@ -67,20 +71,20 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) => ListView(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(AppDimensions.space2xl.w),
             children: [
-              const SizedBox(height: 120),
+              SizedBox(height: 120.h),
               Text(
                 'Unable to load characters',
                 style: Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: AppDimensions.spaceSm.h),
               Text(
                 '$error',
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: AppDimensions.spaceLg.h),
               FilledButton(
                 onPressed: () =>
                     ref.read(characterListControllerProvider.notifier).refresh(),
@@ -102,15 +106,22 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
             return ListView(
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              padding: EdgeInsets.fromLTRB(
+                AppDimensions.spaceLg.w,
+                AppDimensions.spaceXs.h,
+                AppDimensions.spaceLg.w,
+                AppDimensions.space2xl.h,
+              ),
               children: [
                 if (state.usedCache)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.all(12),
+                    margin: EdgeInsets.only(bottom: AppDimensions.spaceSm.h),
+                    padding: EdgeInsets.all(AppDimensions.spaceSm.w),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF0FDFA),
-                      borderRadius: BorderRadius.circular(16),
+                      color: AppColors.offlineBanner,
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusXs.r,
+                      ),
                     ),
                     child: const Text(
                       'Showing locally cached characters. Pull to refresh when the network is back.',
@@ -123,14 +134,14 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
                     prefixIcon: Icon(Icons.search_rounded),
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: AppDimensions.spaceSm.h),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: ['All', 'Alive', 'Dead', 'unknown']
                         .map(
                           (status) => Padding(
-                            padding: const EdgeInsets.only(right: 8),
+                            padding: EdgeInsets.only(right: AppDimensions.spaceXs.w),
                             child: ChoiceChip(
                               label: Text(status),
                               selected: _statusFilter == status,
@@ -143,23 +154,23 @@ class _CharacterListScreenState extends ConsumerState<CharacterListScreen> {
                         .toList(),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: AppDimensions.spaceLg.h),
                 if (visibleCharacters.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 80),
+                  Padding(
+                    padding: EdgeInsets.only(top: 80.h),
                     child: Center(
-                      child: Text('No characters match the current filters.'),
+                      child: const Text('No characters match the current filters.'),
                     ),
                   ),
                 ...visibleCharacters.map(
                   (character) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
+                    padding: EdgeInsets.only(bottom: AppDimensions.spaceSm.h),
                     child: CharacterCard(character: character),
                   ),
                 ),
                 if (state.isLoadingMore)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: AppDimensions.spaceLg.h),
                     child: Center(child: CircularProgressIndicator()),
                   ),
               ],

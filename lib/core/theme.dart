@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'app_colors.dart';
+import 'app_dimensions.dart';
 
 ThemeData buildAppTheme() {
-  const seedColor = Color(0xFF0F766E);
-
   return ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.seed),
     useMaterial3: true,
-    scaffoldBackgroundColor: const Color(0xFFF5F7F4),
+    scaffoldBackgroundColor: AppColors.scaffold,
     appBarTheme: const AppBarTheme(centerTitle: false),
     cardTheme: CardThemeData(
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppDimensions.radiusMd.r),
+      ),
+      color: AppColors.surface,
       margin: EdgeInsets.zero,
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: AppColors.surface,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusXs.r),
         borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusXs.r),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: seedColor),
+        borderRadius: BorderRadius.circular(AppDimensions.radiusXs.r),
+        borderSide: const BorderSide(color: AppColors.seed),
       ),
     ),
   );

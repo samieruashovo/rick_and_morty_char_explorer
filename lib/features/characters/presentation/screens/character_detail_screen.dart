@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/app_colors.dart';
+import '../../../../core/app_dimensions.dart';
 import '../controllers/character_providers.dart';
-import 'edit_character_screen.dart';
 import '../widgets/cached_character_image.dart';
+import 'edit_character_screen.dart';
 
 class CharacterDetailScreen extends ConsumerWidget {
   const CharacterDetailScreen({super.key, required this.characterId});
@@ -27,7 +30,7 @@ class CharacterDetailScreen extends ConsumerWidget {
                 ref.read(favoritesControllerProvider.notifier).toggle(characterId),
             icon: Icon(
               isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
-              color: isFavorite ? const Color(0xFFF59E0B) : null,
+              color: isFavorite ? AppColors.favorite : null,
             ),
           ),
         ],
@@ -43,19 +46,24 @@ class CharacterDetailScreen extends ConsumerWidget {
           }
 
           return ListView(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+            padding: EdgeInsets.fromLTRB(
+              AppDimensions.spaceXl.w,
+              0,
+              AppDimensions.spaceXl.w,
+              AppDimensions.space3xl.h,
+            ),
             children: [
               Hero(
                 tag: 'character-${character.id}',
                 child: CachedCharacterImage(
                   imageUrl: character.image,
                   width: double.infinity,
-                  height: 320,
-                  borderRadius: BorderRadius.circular(28),
-                  iconSize: 42,
+                  height: AppDimensions.detailImage.h,
+                  borderRadius: BorderRadius.circular(AppDimensions.radiusLg.r),
+                  iconSize: AppDimensions.brokenIcon.r,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppDimensions.spaceXl.h),
               Row(
                 children: [
                   Expanded(
@@ -81,7 +89,7 @@ class CharacterDetailScreen extends ConsumerWidget {
               ),
               if (hasOverride)
                 Padding(
-                  padding: const EdgeInsets.only(top: 12),
+                  padding: EdgeInsets.only(top: AppDimensions.spaceSm.h),
                   child: OutlinedButton.icon(
                     onPressed: () => ref
                         .read(overridesControllerProvider.notifier)
@@ -90,7 +98,7 @@ class CharacterDetailScreen extends ConsumerWidget {
                     label: const Text('Reset to API data'),
                   ),
                 ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppDimensions.spaceXl.h),
               _DetailTile(label: 'Status', value: character.status),
               _DetailTile(label: 'Species', value: character.species),
               _DetailTile(label: 'Type', value: character.type),
@@ -114,9 +122,9 @@ class _DetailTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: AppDimensions.spaceSm.h),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(AppDimensions.spaceLg.w),
         child: Row(
           children: [
             Expanded(
