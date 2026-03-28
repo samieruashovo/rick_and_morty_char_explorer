@@ -204,4 +204,4 @@ This project was built to satisfy the assessment requirements with emphasis on:
 
 Add your YouTube walkthrough link here:
 
-`<paste-video-link>`
+`https://youtu.be/GR2MM5sKFng`
