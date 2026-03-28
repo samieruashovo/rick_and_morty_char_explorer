@@ -202,6 +202,4 @@ This project was built to satisfy the assessment requirements with emphasis on:
 
 ## Video Walkthrough
 
-Add your YouTube walkthrough link here:
-
 `https://youtu.be/GR2MM5sKFng`
